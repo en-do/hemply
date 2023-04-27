@@ -40,63 +40,65 @@ Route::get('terpene/{slug}', [\App\Http\Controllers\TerpeneControlller::class, '
 Route::post('news/subscribe', [\App\Http\Controllers\SubscribeController::class, 'join'])->name('subscribe');
 
 Route::prefix('dashboard')->group(function () {
-    Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
-
     Auth::routes(['register' => false]);
 
-    // posts
-    Route::get('posts', [\App\Http\Controllers\PostController::class, 'list'])->name('dashboard.posts');
-    Route::get('posts/add', [\App\Http\Controllers\PostController::class, 'add'])->name('dashboard.post.add');
-    Route::get('posts/{post_id}', [\App\Http\Controllers\PostController::class, 'edit'])->name('dashboard.post.edit');
-    Route::post('posts', [\App\Http\Controllers\PostController::class, 'create'])->name('dashboard.post.create');
-    Route::put('posts/{post_id}', [\App\Http\Controllers\PostController::class, 'update'])->name('dashboard.post.update');
-    Route::delete('posts/{post_id}', [\App\Http\Controllers\PostController::class, 'delete'])->name('dashboard.post.delete');
+    Route::middleware('auth')->group(function () {
+        Route::get('/', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
-    // categories
-    Route::get('categories', [\App\Http\Controllers\CategoryController::class, 'list'])->name('dashboard.categories');
-    Route::get('categories/add', [\App\Http\Controllers\CategoryController::class, 'add'])->name('dashboard.category.add');
-    Route::get('categories/{category_id}', [\App\Http\Controllers\CategoryController::class, 'edit'])->name('dashboard.category.edit');
-    Route::post('categories', [\App\Http\Controllers\CategoryController::class, 'create'])->name('dashboard.category.create');
-    Route::put('categories/{category_id}', [\App\Http\Controllers\CategoryController::class, 'update'])->name('dashboard.category.update');
-    Route::delete('categories/{category_id}', [\App\Http\Controllers\CategoryController::class, 'delete'])->name('dashboard.category.delete');
+        // posts
+        Route::get('posts', [\App\Http\Controllers\PostController::class, 'list'])->name('dashboard.posts');
+        Route::get('posts/add', [\App\Http\Controllers\PostController::class, 'add'])->name('dashboard.post.add');
+        Route::get('posts/{post_id}', [\App\Http\Controllers\PostController::class, 'edit'])->name('dashboard.post.edit');
+        Route::post('posts', [\App\Http\Controllers\PostController::class, 'create'])->name('dashboard.post.create');
+        Route::put('posts/{post_id}', [\App\Http\Controllers\PostController::class, 'update'])->name('dashboard.post.update');
+        Route::delete('posts/{post_id}', [\App\Http\Controllers\PostController::class, 'delete'])->name('dashboard.post.delete');
 
-    // strains
-    Route::get('strains/cannabinoids', [\App\Http\Controllers\StrainController::class, 'cannabinoids'])->name('dashboard.strains.cannabinoids');
-    Route::get('strains/terpenes', [\App\Http\Controllers\StrainController::class, 'terpenes'])->name('dashboard.strains.terpenes');
-    Route::get('strains/effects', [\App\Http\Controllers\StrainController::class, 'effects'])->name('dashboard.strains.effects');
+        // categories
+        Route::get('categories', [\App\Http\Controllers\CategoryController::class, 'list'])->name('dashboard.categories');
+        Route::get('categories/add', [\App\Http\Controllers\CategoryController::class, 'add'])->name('dashboard.category.add');
+        Route::get('categories/{category_id}', [\App\Http\Controllers\CategoryController::class, 'edit'])->name('dashboard.category.edit');
+        Route::post('categories', [\App\Http\Controllers\CategoryController::class, 'create'])->name('dashboard.category.create');
+        Route::put('categories/{category_id}', [\App\Http\Controllers\CategoryController::class, 'update'])->name('dashboard.category.update');
+        Route::delete('categories/{category_id}', [\App\Http\Controllers\CategoryController::class, 'delete'])->name('dashboard.category.delete');
 
-    Route::get('strains', [\App\Http\Controllers\StrainController::class, 'list'])->name('dashboard.strains');
-    Route::get('strains/add', [\App\Http\Controllers\StrainController::class, 'add'])->name('dashboard.strain.add');
-    Route::get('strains/{strain_id}', [\App\Http\Controllers\StrainController::class, 'edit'])->name('dashboard.strain.edit');
-    Route::post('strains', [\App\Http\Controllers\StrainController::class, 'create'])->name('dashboard.strain.create');
-    Route::put('strains/{strain_id}', [\App\Http\Controllers\StrainController::class, 'update'])->name('dashboard.strain.update');
-    Route::delete('strains/{strain_id}', [\App\Http\Controllers\StrainController::class, 'delete'])->name('dashboard.strain.delete');
+        // strains
+        Route::get('strains/cannabinoids', [\App\Http\Controllers\StrainController::class, 'cannabinoids'])->name('dashboard.strains.cannabinoids');
+        Route::get('strains/terpenes', [\App\Http\Controllers\StrainController::class, 'terpenes'])->name('dashboard.strains.terpenes');
+        Route::get('strains/effects', [\App\Http\Controllers\StrainController::class, 'effects'])->name('dashboard.strains.effects');
 
-    // strains parameters
-    Route::get('phenotypes', [\App\Http\Controllers\PhenotypeController::class, 'list'])->name('dashboard.phenotypes');
-    Route::get('phenotypes/{id}', [\App\Http\Controllers\PhenotypeController::class, 'edit'])->name('dashboard.phenotype.edit');
-    Route::put('phenotypes/{id}', [\App\Http\Controllers\PhenotypeController::class, 'update'])->name('dashboard.phenotype.update');
+        Route::get('strains', [\App\Http\Controllers\StrainController::class, 'list'])->name('dashboard.strains');
+        Route::get('strains/add', [\App\Http\Controllers\StrainController::class, 'add'])->name('dashboard.strain.add');
+        Route::get('strains/{strain_id}', [\App\Http\Controllers\StrainController::class, 'edit'])->name('dashboard.strain.edit');
+        Route::post('strains', [\App\Http\Controllers\StrainController::class, 'create'])->name('dashboard.strain.create');
+        Route::put('strains/{strain_id}', [\App\Http\Controllers\StrainController::class, 'update'])->name('dashboard.strain.update');
+        Route::delete('strains/{strain_id}', [\App\Http\Controllers\StrainController::class, 'delete'])->name('dashboard.strain.delete');
 
-    Route::get('terpenes', [\App\Http\Controllers\TerpeneControlller::class, 'list'])->name('dashboard.terpenes');
-    Route::get('terpenes/{id}', [\App\Http\Controllers\TerpeneControlller::class, 'edit'])->name('dashboard.terpene.edit');
-    Route::put('terpenes/{id}', [\App\Http\Controllers\TerpeneControlller::class, 'update'])->name('dashboard.terpene.update');
+        // strains parameters
+        Route::get('phenotypes', [\App\Http\Controllers\PhenotypeController::class, 'list'])->name('dashboard.phenotypes');
+        Route::get('phenotypes/{id}', [\App\Http\Controllers\PhenotypeController::class, 'edit'])->name('dashboard.phenotype.edit');
+        Route::put('phenotypes/{id}', [\App\Http\Controllers\PhenotypeController::class, 'update'])->name('dashboard.phenotype.update');
 
-    Route::get('cannabinoids', [\App\Http\Controllers\CannabinoidControlller::class, 'list'])->name('dashboard.cannabinoids');
-    Route::get('cannabinoids/{id}', [\App\Http\Controllers\CannabinoidControlller::class, 'edit'])->name('dashboard.cannabinoid.edit');
-    Route::put('cannabinoids/{id}', [\App\Http\Controllers\CannabinoidControlller::class, 'update'])->name('dashboard.cannabinoid.update');
+        Route::get('terpenes', [\App\Http\Controllers\TerpeneControlller::class, 'list'])->name('dashboard.terpenes');
+        Route::get('terpenes/{id}', [\App\Http\Controllers\TerpeneControlller::class, 'edit'])->name('dashboard.terpene.edit');
+        Route::put('terpenes/{id}', [\App\Http\Controllers\TerpeneControlller::class, 'update'])->name('dashboard.terpene.update');
 
-    Route::get('effects', [\App\Http\Controllers\EffectController::class, 'list'])->name('dashboard.effects');
-    Route::get('effects/{id}', [\App\Http\Controllers\EffectController::class, 'edit'])->name('dashboard.effect.edit');
-    Route::put('effects/{id}', [\App\Http\Controllers\EffectController::class, 'update'])->name('dashboard.effect.update');
+        Route::get('cannabinoids', [\App\Http\Controllers\CannabinoidControlller::class, 'list'])->name('dashboard.cannabinoids');
+        Route::get('cannabinoids/{id}', [\App\Http\Controllers\CannabinoidControlller::class, 'edit'])->name('dashboard.cannabinoid.edit');
+        Route::put('cannabinoids/{id}', [\App\Http\Controllers\CannabinoidControlller::class, 'update'])->name('dashboard.cannabinoid.update');
 
-    // users
-    Route::get('users', [\App\Http\Controllers\UserController::class, 'list'])->name('dashboard.users');
-    Route::get('users/add', [\App\Http\Controllers\UserController::class, 'add'])->name('dashboard.user.add');
-    Route::get('users/{user_id}', [\App\Http\Controllers\UserController::class, 'edit'])->name('dashboard.user.edit');
-    Route::post('users', [\App\Http\Controllers\UserController::class, 'create'])->name('dashboard.user.create');
-    Route::put('users/{user_id}', [\App\Http\Controllers\UserController::class, 'update'])->name('dashboard.user.update');
+        Route::get('effects', [\App\Http\Controllers\EffectController::class, 'list'])->name('dashboard.effects');
+        Route::get('effects/{id}', [\App\Http\Controllers\EffectController::class, 'edit'])->name('dashboard.effect.edit');
+        Route::put('effects/{id}', [\App\Http\Controllers\EffectController::class, 'update'])->name('dashboard.effect.update');
 
-    // api
-    Route::get('strain/cannabinoids', [\App\Http\Controllers\CannabinoidControlller::class, 'list']);
-    Route::get('strain/terpenes', [\App\Http\Controllers\TerpeneControlller::class, 'list']);
+        // users
+        Route::get('users', [\App\Http\Controllers\UserController::class, 'list'])->name('dashboard.users');
+        Route::get('users/add', [\App\Http\Controllers\UserController::class, 'add'])->name('dashboard.user.add');
+        Route::get('users/{user_id}', [\App\Http\Controllers\UserController::class, 'edit'])->name('dashboard.user.edit');
+        Route::post('users', [\App\Http\Controllers\UserController::class, 'create'])->name('dashboard.user.create');
+        Route::put('users/{user_id}', [\App\Http\Controllers\UserController::class, 'update'])->name('dashboard.user.update');
+
+        // api
+        Route::get('strain/cannabinoids', [\App\Http\Controllers\CannabinoidControlller::class, 'list']);
+        Route::get('strain/terpenes', [\App\Http\Controllers\TerpeneControlller::class, 'list']);
+    });
 });
