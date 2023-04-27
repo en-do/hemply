@@ -20,11 +20,12 @@
                 <thead class="table-light">
                 <tr>
                     <th>#</th>
-                    <th>Username</th>
-                    <th>User</th>
-                    <th>Role</th>
-                    <th>Posts</th>
-                    <th>Joined date</th>
+                    <th>Email</th>
+                    <th>Нік</th>
+                    <th>Ім'я</th>
+                    <th>Роль</th>
+                    <th>Публікації</th>
+                    <th>Дата реєстрації</th>
                     <th></th>
                 </tr>
                 </thead>
@@ -34,6 +35,9 @@
                         <tr>
                             <td>{{ $user->id }}</td>
                             <td>
+                                {{ $user->email }}
+                            </td>
+                            <td>
                                 {{ $user->username }}
                             </td>
                             <td>
@@ -41,7 +45,11 @@
                                 <div class="fw-bold">{{ $user->email }}</div>
                             </td>
                             <td>
-                                {{ $user->role->title }}
+                                @if($user->role)
+                                    {{ $user->role->title }}
+                                @else
+                                    --
+                                @endif
                             </td>
                             <td>
                                 <div class="badge bg-primary">{{ $user->posts->count() }}</div>
@@ -62,7 +70,7 @@
                     @endforeach
                 @else
                     <tr>
-                        <td colspan="6" align="center">Users not found</td>
+                        <td colspan="7" align="center">Користувачів не знайдено</td>
                     </tr>
                 @endif
                 </tbody>
