@@ -41,6 +41,18 @@
         <meta property="og:description" content="@yield('description')️">
     @endif
 
+    @env('production')
+        <!-- Google tag (gtag.js) -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-XKMHMGEVBY"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-XKMHMGEVBY');
+        </script>
+    @endenv
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -80,27 +92,23 @@
 
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ms-auto">
-                            <a href="{{ route('strains') }}" class="btn btn-warning">Каталог сортів</a>
-
                             @auth
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                        {{ Auth::user()->name }}
+                                        {{ Auth::user()->email }}
                                     </a>
 
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                        <a class="dropdown-item" href="{{ route('logout') }}"
-                                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                            {{ __('Logout') }}
+                                        <a class="dropdown-item" href="{{ route('logout') }}">
+                                            Вийти
                                         </a>
-
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
                                     </div>
                                 </li>
                             @endguest
+
+                            <li class="nav-item button">
+                                <a href="{{ route('strains') }}" class="btn btn-warning">Каталог сортів</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
